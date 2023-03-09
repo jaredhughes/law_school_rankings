@@ -1,0 +1,20 @@
+---
+version: "2"
+services:
+  lsat_stats_app:
+    image: nicbet/phoenix:1.7.0-alpine
+    build: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./app:/app
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - lsat_stats_db
+  lsat_stats_db:
+    image: postgres:12.14
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

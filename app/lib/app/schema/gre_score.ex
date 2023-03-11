@@ -3,17 +3,17 @@ defmodule App.Schema.GreScore do
   import Ecto.Changeset
 
   schema "gre_scores" do
-    field :quantitative_percentile_25, :integer
-    field :quantitative_percentile_50, :integer
-    field :quantitative_percentile_75, :integer
-    field :verbal_percentile_25, :integer
-    field :verbal_percentile_50, :integer
-    field :verbal_percentile_75, :integer
-    field :written_percentile_25, :float
-    field :written_percentile_50, :float
-    field :written_percentile_75, :float
-    belongs_to :school, App.Schema.School
-    belongs_to :first_year_class, App.Schema.FirstYearClass
+    field(:quantitative_percentile_25, :integer)
+    field(:quantitative_percentile_50, :integer)
+    field(:quantitative_percentile_75, :integer)
+    field(:verbal_percentile_25, :integer)
+    field(:verbal_percentile_50, :integer)
+    field(:verbal_percentile_75, :integer)
+    field(:written_percentile_25, :float)
+    field(:written_percentile_50, :float)
+    field(:written_percentile_75, :float)
+    belongs_to(:school, App.Schema.School)
+    belongs_to(:first_year_class, App.Schema.FirstYearClass)
 
     timestamps()
   end

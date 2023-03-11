@@ -3,11 +3,11 @@ defmodule App.Schema.LsatScore do
   import Ecto.Changeset
 
   schema "lsat_scores" do
-    field :percentile_25, :integer
-    field :percentile_50, :integer
-    field :percentile_75, :integer
-    belongs_to :school, App.Schema.School
-    belongs_to :first_year_class, App.Schema.FirstYearClass
+    field(:percentile_25, :integer)
+    field(:percentile_50, :integer)
+    field(:percentile_75, :integer)
+    belongs_to(:school, App.Schema.School)
+    belongs_to(:first_year_class, App.Schema.FirstYearClass)
 
     timestamps()
   end

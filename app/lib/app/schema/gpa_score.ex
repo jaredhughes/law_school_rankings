@@ -3,11 +3,11 @@ defmodule App.Schema.GpaScore do
   import Ecto.Changeset
 
   schema "gpa_scores" do
-    field :percentile_25, :float
-    field :percentile_50, :float
-    field :percentile_75, :float
-    belongs_to :school, App.Schema.School
-    belongs_to :first_year_class, App.Schema.FirstYearClass
+    field(:percentile_25, :float)
+    field(:percentile_50, :float)
+    field(:percentile_75, :float)
+    belongs_to(:school, App.Schema.School)
+    belongs_to(:first_year_class, App.Schema.FirstYearClass)
 
     timestamps()
   end

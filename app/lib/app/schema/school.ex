@@ -3,7 +3,7 @@ defmodule App.Schema.School do
   import Ecto.Changeset
 
   schema "schools" do
-    field :name, :string
+    field(:name, :string)
 
     timestamps()
   end

@@ -3,17 +3,23 @@ defmodule App.Schema.Ranking do
   import Ecto.Changeset
 
   schema "rankings" do
-    field :rank, :string
-    field :school, :id
-    field :first_year_class, :id
+    field(:rank, :string)
+    belongs_to(:school, App.Schema.School)
+    belongs_to(:first_year_class, App.Schema.FirstYearClass)
 
     timestamps()
   end
 
+  @required_fields [
+    :rank,
+    :school_id,
+    :first_year_class_id
+  ]
+
   @doc false
   def changeset(ranking, attrs) do
     ranking
-    |> cast(attrs, [:rank])
-    |> validate_required([:rank])
+    |> cast(attrs, @required_fields)
+    |> validate_required(@required_fields)
   end
 end

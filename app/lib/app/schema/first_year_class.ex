@@ -3,7 +3,7 @@ defmodule App.Schema.FirstYearClass do
   import Ecto.Changeset
 
   schema "first_year_classes" do
-    field :year, :integer
+    field(:year, :integer)
 
     timestamps()
   end

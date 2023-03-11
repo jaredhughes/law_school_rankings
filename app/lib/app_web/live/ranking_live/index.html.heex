@@ -1,0 +1,45 @@
+<.header>
+  Listing Rankings
+  <:actions>
+    <.link patch={~p"/rankings/new"}>
+      <.button>New Ranking</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="rankings"
+  rows={@streams.rankings}
+  row_click={fn {_id, ranking} -> JS.navigate(~p"/rankings/#{ranking}") end}
+>
+  <:action :let={{_id, ranking}}>
+    <div class="sr-only">
+      <.link navigate={~p"/rankings/#{ranking}"}>Show</.link>
+    </div>
+    <.link patch={~p"/rankings/#{ranking}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, ranking}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: ranking.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="ranking-modal"
+  show
+  on_cancel={JS.navigate(~p"/rankings")}
+>
+  <.live_component
+    module={AppWeb.RankingLive.FormComponent}
+    id={@ranking.id || :new}
+    title={@page_title}
+    action={@live_action}
+    ranking={@ranking}
+    patch={~p"/rankings"}
+  />
+</.modal>

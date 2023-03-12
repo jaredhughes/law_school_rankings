@@ -4,6 +4,7 @@ defmodule App.Schema.FirstYearClass do
 
   schema "first_year_classes" do
     field(:year, :integer)
+    has_many(:rankings, App.Schema.Ranking)
 
     timestamps()
   end

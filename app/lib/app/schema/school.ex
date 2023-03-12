@@ -4,6 +4,7 @@ defmodule App.Schema.School do
 
   schema "schools" do
     field(:name, :string)
+    has_many(:rankings, App.Schema.Ranking)
 
     timestamps()
   end

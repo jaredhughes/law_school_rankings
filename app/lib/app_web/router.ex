@@ -18,6 +18,8 @@ defmodule AppWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/rankings", RankingLive.Index, :index
   end
 
   # Other scopes may use custom stacks.

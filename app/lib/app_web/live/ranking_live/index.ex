@@ -1,12 +1,14 @@
 defmodule AppWeb.RankingLive.Index do
   use AppWeb, :live_view
-
   alias App.Rankings
-  alias App.Schema.Ranking
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :rankings, Rankings.list_rankings())}
+    {:ok,
+     assign(socket, %{
+       school: nil,
+       school_options: Rankings.list_schools()
+     })}
   end
 
   @impl true
@@ -14,34 +16,17 @@ defmodule AppWeb.RankingLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Ranking")
-    |> assign(:ranking, Rankings.get_ranking!(id))
-  end
-
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign(:page_title, "New Ranking")
-    |> assign(:ranking, %Ranking{})
-  end
-
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Rankings")
-    |> assign(:ranking, nil)
   end
 
   @impl true
-  def handle_info({AppWeb.RankingLive.FormComponent, {:saved, ranking}}, socket) do
-    {:noreply, stream_insert(socket, :rankings, ranking)}
-  end
-
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    ranking = Rankings.get_ranking!(id)
-    {:ok, _} = Rankings.delete_ranking(ranking)
-
-    {:noreply, stream_delete(socket, :rankings, ranking)}
+  def handle_event("search", %{"select_school" => school_id}, socket) do
+    {:noreply,
+     assign(socket, %{
+       school: Rankings.get_school(school_id),
+       scores: Rankings.get_scores(school_id)
+     })}
   end
 end

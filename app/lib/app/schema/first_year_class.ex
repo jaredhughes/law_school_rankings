@@ -5,6 +5,9 @@ defmodule App.Schema.FirstYearClass do
   schema "first_year_classes" do
     field(:year, :integer)
     has_many(:rankings, App.Schema.Ranking)
+    has_many(:gpa_scores, App.Schema.GpaScore)
+    has_many(:gre_scores, App.Schema.GreScore)
+    has_many(:lsat_scores, App.Schema.LsatScore)
 
     timestamps()
   end

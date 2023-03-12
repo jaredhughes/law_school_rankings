@@ -1,22 +1,49 @@
 <.header>
-  Listing Rankings
+  Law School Rankings
 </.header>
 
-<.table id="rankings" rows={@streams.rankings} row_click={fn {_id, ranking} -> JS.navigate(~p"/rankings/#{ranking}")
-  end}
-  >
-  <:col :let={{_id, ranking}} label="rank">
-    <%= ranking.rank %>
-  </:col>
-  <:col :let={{_id, ranking}} label="school">
-    <%= ranking.school.name %>
-  </:col>
-  <:col :let={{_id, ranking}} label="year">
-    <%= ranking.first_year_class.year %>
-  </:col>
-</.table>
+<hr class="my-5" />
 
-<.modal :if={@live_action in [:new, :edit]} id="ranking-modal" show on_cancel={JS.navigate(~p"/rankings")}>
-  <.live_component module={AppWeb.RankingLive.FormComponent} id={@ranking.id || :new} title={@page_title}
-    action={@live_action} ranking={@ranking} patch={~p"/rankings"} />
-</.modal>
+<.form for={%{}} phx-change="search">
+  <.input
+    type="select"
+    prompt="Select a school"
+    name="select_school"
+    value={nil}
+    id="select_school"
+    options={@school_options}
+  />
+</.form>
+
+<%= if @school do %>
+  <div class="my-5">
+    <h2 class="text-xl font-semibold mb-3"><%= @school.name %></h2>
+
+    <%= for {year, exams} <- @scores do %>
+    <div class="mb-2">
+      <h3 class="font-semibold mb-2"><%= year %></h3>
+      <%= for %App.Schema.LsatScore{} = lsat <- exams do %>
+        <%= lsat.percentile_25 %>
+      <% end %>
+
+      <%= for %App.Schema.GpaScore{} = gpa <- exams do %>
+        <%= gpa.percentile_25 %>
+      <% end %>
+
+      <%= for %App.Schema.GreScore{} = gre <- exams do %>
+
+        <%= gre.verbal_percentile_25 %>
+        <%= gre.verbal_percentile_50 %>
+        <%= gre.verbal_percentile_75 %>
+        <%= gre.quantitative_percentile_25 %>
+        <%= gre.quantitative_percentile_50 %>
+        <%= gre.quantitative_percentile_75 %>
+        <%= gre.written_percentile_25 %>
+        <%= gre.written_percentile_50 %>
+        <%= gre.written_percentile_75 %>
+
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+<% end %>

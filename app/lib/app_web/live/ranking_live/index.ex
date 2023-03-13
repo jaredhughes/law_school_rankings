@@ -27,7 +27,8 @@ defmodule AppWeb.RankingLive.Index do
      assign(socket, %{
        school: Rankings.get_school(school_id),
        scores: Rankings.get_scores(school_id),
-       fact: Rankings.get_lsat_fact(school_id)
+       fact: Rankings.get_lsat_fact(school_id),
+       rankings_by_year: Rankings.rankings_by_year(school_id)
      })}
   end
 

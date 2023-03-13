@@ -48,6 +48,19 @@ defmodule App.Rankings do
     end)
   end
 
+  @spec rankings_by_year(integer() | charlist()) :: Map.t()
+  def rankings_by_year(school_id) do
+    School
+    |> join(:inner, [s], r in assoc(s, :rankings))
+    |> join(:inner, [s, r], fyc in assoc(r, :first_year_class))
+    |> where([s, _], s.id == ^school_id)
+    |> select([s, r, fyc], %{year: fyc.year, rank: r.rank})
+    |> Repo.all()
+    |> Enum.reduce(%{}, fn v, acc ->
+      Map.put(acc, v.year, v.rank)
+    end)
+  end
+
   @spec get_lsat_fact(integer() | charlist()) :: charlist()
   def get_lsat_fact(school_id) do
     most_recent =

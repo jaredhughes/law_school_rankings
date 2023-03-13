@@ -18,30 +18,53 @@
 <%= if @school do %>
   <div class="my-5">
     <h2 class="text-xl font-semibold mb-3"><%= @school.name %></h2>
+      <p class="italic mb-5"><%= @fact %></p>
 
     <%= for {year, exams} <- @scores do %>
-    <div class="mb-2">
-      <h3 class="font-semibold mb-2"><%= year %></h3>
-      <%= for %App.Schema.LsatScore{} = lsat <- exams do %>
-        <%= lsat.percentile_25 %>
+    <div class="my-4 border-b-2 border-slate-300">
+      <h3 class="font-semibold mb-2 text-xl"><%= year %></h3>
+
+      <%= if exams[:lsat] do %>
+        <h4 class="text-sm font-semibold mb-2">LSAT</h4>
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <.score_cell percentile={75} data={exams.lsat.percentile_75} />
+          <.score_cell percentile={50} data={exams.lsat.percentile_50} />
+          <.score_cell percentile={25} data={exams.lsat.percentile_25} />
+        </div>
       <% end %>
 
-      <%= for %App.Schema.GpaScore{} = gpa <- exams do %>
-        <%= gpa.percentile_25 %>
+      <%= if exams[:gpa] do %>
+        <h4 class="text-sm font-semibold mb-2">GPA</h4>
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <.score_cell percentile={75} data={exams.gpa.percentile_75} />
+          <.score_cell percentile={50} data={exams.gpa.percentile_50} />
+          <.score_cell percentile={25} data={exams.gpa.percentile_25} />
+        </div>
       <% end %>
 
-      <%= for %App.Schema.GreScore{} = gre <- exams do %>
+      <%= if exams[:gre] do %>
+        <h4 class="text-sm font-semibold mb-2">GRE</h4>
 
-        <%= gre.verbal_percentile_25 %>
-        <%= gre.verbal_percentile_50 %>
-        <%= gre.verbal_percentile_75 %>
-        <%= gre.quantitative_percentile_25 %>
-        <%= gre.quantitative_percentile_50 %>
-        <%= gre.quantitative_percentile_75 %>
-        <%= gre.written_percentile_25 %>
-        <%= gre.written_percentile_50 %>
-        <%= gre.written_percentile_75 %>
+        <p class="italic mb-2">Verbal</p>
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <.score_cell percentile={75} data={exams.gre.verbal_percentile_75} />
+          <.score_cell percentile={50} data={exams.gre.verbal_percentile_50} />
+          <.score_cell percentile={25} data={exams.gre.verbal_percentile_25} />
+        </div>
 
+        <p class="italic mb-2">Quantitative</p>
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <.score_cell percentile={75} data={exams.gre.quantitative_percentile_75} />
+          <.score_cell percentile={50} data={exams.gre.quantitative_percentile_50} />
+          <.score_cell percentile={25} data={exams.gre.quantitative_percentile_25} />
+        </div>
+
+        <p class="italic mb-2">Written</p>
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <.score_cell percentile={75} data={exams.gre.written_percentile_75} />
+          <.score_cell percentile={50} data={exams.gre.written_percentile_50} />
+          <.score_cell percentile={25} data={exams.gre.written_percentile_25} />
+        </div>
       <% end %>
     </div>
     <% end %>

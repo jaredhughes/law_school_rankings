@@ -42,6 +42,4 @@ In Codespaces, open the Ports tab in the terminal and click the globe icon to op
 
 ![.github/ports.png](.github/ports.png)
 
-Finally, you can visit the route `/rankings` to view the work specific to the [assignment instructions](https://coda.io/d/Elixir-Test-Assignment-Medians_deRalPA8fGX/Instructions_sunb-#_luGHT).
-
 ![.github/rankings.png](.github/rankings.png)
